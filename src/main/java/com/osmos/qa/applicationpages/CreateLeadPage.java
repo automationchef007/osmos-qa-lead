@@ -86,4 +86,8 @@ public class CreateLeadPage extends BasePage {
     public boolean isPresent() {
         return isDisplayed(LEAD_FORM_TITLE);
     }
+
+    public boolean isClosed() {
+        return isNotDisplayed(LEAD_FORM_TITLE);
+    }
 }

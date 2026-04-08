@@ -50,4 +50,8 @@ public abstract class BasePage {
             return false;
         }
     }
+
+    protected boolean isNotDisplayed(By locator) {
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
 }

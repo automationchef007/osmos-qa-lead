@@ -43,11 +43,7 @@ public class DashboardPage extends BasePage {
         return new CreateLeadPage(driver);
     }
 
-    /**
-     * Business Action : This method checks if lead is present or not in the list
-     * @param leadName
-     * @return
-     */
+
     public boolean isLeadPresent(String leadName) {
         By LEAD_NAME= By.xpath("//table[@data-testid='leads-table']/tbody/tr/td[text()='"+leadName+"']");
         try {

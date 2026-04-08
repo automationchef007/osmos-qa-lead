@@ -33,7 +33,7 @@ public class CreateLeadE2ETest extends BaseTest {
         addTestStep("Created a new lead with name '" + lead.getName() + "'");
 
         // Step 3: Verify lead in list
-        Assert.assertFalse(createLeadPage.isPresent(), "Create new lead popup should be closed");
+        Assert.assertTrue(createLeadPage.isClosed(), "Create new lead popup should be closed");
         Assert.assertTrue(dashboard.isLoaded(), "Dashboard should reload after lead creation");
         Assert.assertTrue(dashboard.isLeadPresent(lead.getName()),
                 "Newly created lead '" + lead.getName() + "' should appear in the leads list");

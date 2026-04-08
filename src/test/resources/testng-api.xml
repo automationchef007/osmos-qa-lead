@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="API Test Suite" parallel="tests" thread-count="2">
+
+    <test name="Login API Tests">
+        <classes>
+            <class name="com.osmos.qa.tests.api.LoginApiTest"/>
+        </classes>
+    </test>
+
+    <test name="Leads API Tests">
+        <classes>
+            <class name="com.osmos.qa.tests.api.LeadsApiTest"/>
+        </classes>
+    </test>
+
+</suite>

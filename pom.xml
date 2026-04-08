@@ -46,6 +46,30 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>all</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+            </properties>
+        </profile>
+        <profile>
+            <id>api</id>
+            <properties>
+                <suiteXmlFile>src/test/resources/testng-api.xml</suiteXmlFile>
+            </properties>
+        </profile>
+        <profile>
+            <id>ui</id>
+            <properties>
+                <suiteXmlFile>src/test/resources/testng-ui.xml</suiteXmlFile>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
@@ -54,7 +78,7 @@
                 <version>3.2.2</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

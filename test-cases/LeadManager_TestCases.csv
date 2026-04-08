@@ -1,0 +1,286 @@
+,,,,Total Number of Test Cases on This Sheet:,55,Test Results,,,,,,Automation Tracking,,,,,,,,,,
+ID,Title,Summary / Purpose,Pre-Requisite,Steps / Input,Expected Result,Test Result,Results Observed,Tested By,Platform,Build,Bug ID,UI,API,DB,Automation Priority,Automation Name,R,Testing Type,Priority,JIRA Key,Requirement Type,Horizontal Components
+1.1.1,Login with valid Admin credentials,"Verify that admin user can login successfully with valid credentials.",User is on the login page (https://v0-lead-manager-app.vercel.app/login),"1. Enter email: admin@company.com
+2. Enter password: Admin@123
+3. Click ""Sign in"" button.","Verify that:
+1) User is redirected to the dashboard page (/dashboard/leads).
+2) Header displays admin@company.com with ""Administrator"" badge.
+3) Leads table is displayed with data.",,,,,,,Y,,,,,,Functional,High,,,
+1.1.2,Login with valid Manager credentials,"Verify that manager user can login successfully with limited access.",User is on the login page.,"1. Enter email: qa@company.com
+2. Enter password: password123
+3. Click ""Sign in"" button.","Verify that:
+1) User is redirected to the dashboard with ""Manager"" badge.
+2) Delete action (trash icon) is NOT visible on lead rows.
+3) Create, Edit, View, Export actions are available.",,,,,,,Y,,,,,,Functional,High,,,
+1.1.3,Login with valid Viewer credentials,"Verify that viewer user can login with read-only access.",User is on the login page.,"1. Enter email: tester@company.com
+2. Enter password: Test@456
+3. Click ""Sign in"" button.","Verify that:
+1) User is redirected to the dashboard with ""Viewer"" badge.
+2) ""+ Create Lead"" button is NOT visible.
+3) Edit (pencil) and Delete (trash) icons are NOT visible in Actions column.
+4) Only View (eye) icon is available.",,,,,,,Y,,,,,,Functional,High,,,
+1.1.4,Login with wrong password,"Verify that login fails with incorrect password.",User is on the login page.,"1. Enter email: admin@company.com
+2. Enter password: wrongpass
+3. Click ""Sign in"" button.","Verify that:
+1) Login fails.
+2) Error message ""Invalid credentials"" is displayed.
+3) User remains on the login page.",,,,,,,Y,,,,,,Negative,High,,,
+1.1.5,Login with unregistered email,"Verify that login fails with an email not in the system.",User is on the login page.,"1. Enter email: unknown@test.com
+2. Enter password: password123
+3. Click ""Sign in"" button.","Verify that:
+1) Login fails.
+2) Appropriate error message is displayed.
+3) User remains on the login page.",,,,,,,Y,,,,,,Negative,High,,,
+1.1.6,Login with invalid email format,"Verify that login rejects invalid email format.",User is on the login page.,"1. Enter email: notanemail
+2. Enter password: password123
+3. Click ""Sign in"" button.","Verify that:
+1) Browser or application shows email validation error.
+2) Login request is not submitted.",,,,,,,Y,,,,,,Validation,Medium,,,
+1.1.7,Login with empty email and password,"Verify that login is blocked when both fields are empty.",User is on the login page.,"1. Leave email field empty.
+2. Leave password field empty.
+3. Click ""Sign in"" button.","Verify that:
+1) Validation errors are shown for both fields.
+2) Login is not attempted.",,,,,,,Y,,,,,,Validation,High,,,
+1.1.8,Login with empty email only,"Verify that login is blocked when email is empty.",User is on the login page.,"1. Leave email field empty.
+2. Enter password: Admin@123
+3. Click ""Sign in"" button.","Verify that:
+1) Validation error is shown for the email field.
+2) Login is not attempted.",,,,,,,Y,,,,,,Validation,Medium,,,
+1.1.9,Login with empty password only,"Verify that login is blocked when password is empty.",User is on the login page.,"1. Enter email: admin@company.com
+2. Leave password field empty.
+3. Click ""Sign in"" button.","Verify that:
+1) Validation error is shown for the password field.
+2) Login is not attempted.",,,,,,,Y,,,,,,Validation,Medium,,,
+1.1.10,Password field masks input,"Verify that password field masks characters.",User is on the login page.,"1. Click on the password field.
+2. Type Admin@123.","Verify that:
+1) Characters are masked (shown as dots/bullets).
+2) Input type attribute is ""password"".",,,,,,,Y,,,,,,Functional,Low,,,
+1.1.11,Access dashboard without login,"Verify that unauthenticated users cannot access dashboard directly.",User is NOT logged in (clear cookies/session).,"1. Navigate directly to https://v0-lead-manager-app.vercel.app/dashboard/leads","Verify that:
+1) User is redirected to the login page.
+2) Dashboard content is not accessible.",,,,,,,Y,,,,,,Security,High,,,
+1.1.12,Login with SQL injection in email,"Verify that SQL injection is handled securely.",User is on the login page.,"1. Enter email: ' OR 1=1 --
+2. Enter password: anything
+3. Click ""Sign in"" button.","Verify that:
+1) Login fails with an error message.
+2) No unauthorized access is granted.",,,,,,,Y,,,,,,Security,High,,,
+1.1.13,Login with leading/trailing spaces in email,"Verify that spaces in email are handled properly.",User is on the login page.,"1. Enter email: ""  admin@company.com  "" (with spaces).
+2. Enter password: Admin@123
+3. Click ""Sign in"" button.","Verify that:
+1) Application trims spaces and logs in successfully, OR
+2) Shows a clear validation error.",,,,,,,Y,,,,,,Edge Case,Low,,,
+1.1.14,Logout and verify session cleared,"Verify that logout clears the session completely.",User is logged in as Admin.,"1. Click ""Logout"" button in the header.
+2. Press browser back button.","Verify that:
+1) User is redirected to the login page.
+2) Dashboard is not accessible via back button.",,,,,,,Y,,,,,,Functional,High,,,
+1.2.1,Create lead with mandatory fields only,"Verify that a lead can be created with only Name and Email.",User is logged in as Admin. Dashboard is displayed.,"1. Click ""+ Create Lead"" button.
+2. Enter Name: John Doe
+3. Enter Email: john.doe@test.com
+4. Leave all other fields as default.
+5. Click ""Create Lead"" button.","Verify that:
+1) Lead is created successfully.
+2) Success message/toast is displayed.
+3) Modal closes.
+4) New lead appears in the leads list.",,,,,,,Y,,,,,,Functional,Critical,,,
+1.2.2,Create lead with all fields filled,"Verify that a lead can be created with all fields populated.","User is logged in as Admin. Dashboard is displayed.","1. Click ""+ Create Lead"".
+2. Enter Name: Jane Smith
+3. Enter Email: jane.smith@corp.com
+4. Enter Phone: +1 (555) 999-8888
+5. Enter Company: Tech Corp
+6. Enter Job Title: VP of Sales
+7. Select Industry: Technology
+8. Select Source: LinkedIn
+9. Select Priority: High
+10. Select Status: New
+11. Enter Deal Value: 75000
+12. Set Expected Close Date: a future date
+13. Set Follow-up Date: a future date
+14. Check ""Lead is qualified""
+15. Check ""Opted in for email communications""
+16. Enter Notes: Interested in enterprise plan
+17. Click ""Create Lead"".","Verify that:
+1) Lead is created with all fields populated.
+2) Lead appears in the list with correct Priority (High), Status (New), Deal Value ($75,000), and Source (LinkedIn).",,,,,,,Y,,,,,,Functional,Critical,,,
+1.2.3,Create lead missing mandatory Email,"Verify that lead creation fails when Email is empty.",User is logged in as Admin. Create Lead modal is open.,"1. Enter Name: Test Lead
+2. Leave Email field empty.
+3. Click ""Create Lead"".","Verify that:
+1) Validation error is shown for the Email field.
+2) Lead is not created.",,,,,,,Y,,,,,,Validation,High,,,
+1.2.4,Create lead missing mandatory Name,"Verify that lead creation fails when Name is empty.",User is logged in as Admin. Create Lead modal is open.,"1. Leave Name field empty.
+2. Enter Email: test@test.com
+3. Click ""Create Lead"".","Verify that:
+1) Validation error is shown for the Name field.
+2) Lead is not created.",,,,,,,Y,,,,,,Validation,High,,,
+1.2.5,Create lead with invalid email format,"Verify that lead creation rejects invalid email.",User is logged in as Admin. Create Lead modal is open.,"1. Enter Name: Invalid Email Lead
+2. Enter Email: not-an-email
+3. Click ""Create Lead"".","Verify that:
+1) Validation error is shown for the Email field.
+2) Lead is not created.",,,,,,,Y,,,,,,Validation,High,,,
+1.2.6,Create lead with duplicate email,"Verify behavior when creating a lead with an existing email.",User is logged in as Admin. A lead with email brian.young@ecommerce.co already exists.,"1. Click ""+ Create Lead"".
+2. Enter Name: Duplicate Test
+3. Enter Email: brian.young@ecommerce.co
+4. Click ""Create Lead"".","Verify that:
+1) Either a duplicate warning is shown, OR
+2) The lead is created (verify business rules).",,,,,,,Y,,,,,,Edge Case,Medium,,,
+1.2.7,Create lead with each Priority level,"Verify that leads can be created with all priority values.",User is logged in as Admin.,"1. Create a lead with Priority: Low
+2. Create a lead with Priority: Medium
+3. Create a lead with Priority: High
+4. Create a lead with Priority: Critical","Verify that:
+1) Each lead is created successfully.
+2) Priority badge color matches the selected level in the leads list.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.2.8,Create lead with each Status value,"Verify that leads can be created with all status values.",User is logged in as Admin.,"1. Create a lead with Status: New
+2. Create a lead with Status: Contacted
+3. Create a lead with Status: Qualified","Verify that:
+1) Each lead is created successfully.
+2) Status badge in the list reflects the selected value.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.2.9,Create lead with negative Deal Value,"Verify that negative deal value is rejected.",User is logged in as Admin. Create Lead modal is open.,"1. Enter Name: Negative Deal
+2. Enter Email: neg@test.com
+3. Enter Deal Value: -5000
+4. Click ""Create Lead"".","Verify that:
+1) Validation error is shown for Deal Value, OR
+2) The field rejects negative input.",,,,,,,Y,,,,,,Validation,Medium,,,
+1.2.10,Create lead with zero Deal Value,"Verify that zero deal value is accepted.",User is logged in as Admin. Create Lead modal is open.,"1. Enter Name: Zero Deal
+2. Enter Email: zero@test.com
+3. Enter Deal Value: 0
+4. Click ""Create Lead"".","Verify that:
+1) Lead is created successfully.
+2) Deal Value shows $0 in the list.",,,,,,,Y,,,,,,Edge Case,Low,,,
+1.2.11,Create lead with very long Name,"Verify boundary handling for Name field.",User is logged in as Admin. Create Lead modal is open.,"1. Enter Name: 256+ character string.
+2. Enter Email: long@test.com
+3. Click ""Create Lead"".","Verify that:
+1) Either the field truncates input to max allowed length, OR
+2) A validation error is shown.",,,,,,,Y,,,,,,Edge Case,Low,,,
+1.2.12,Create lead with special characters and XSS in Name,"Verify that special characters and XSS are handled safely.",User is logged in as Admin. Create Lead modal is open.,"1. Enter Name: O'Brien-Smith & Co. <script>alert('xss')</script>
+2. Enter Email: special@test.com
+3. Click ""Create Lead"".","Verify that:
+1) Lead is created with the name displayed correctly (HTML-escaped).
+2) No XSS script execution occurs.",,,,,,,Y,,,,,,Security,High,,,
+1.2.13,Create lead with past Expected Close Date,"Verify behavior with a past date for Expected Close Date.",User is logged in as Admin. Create Lead modal is open.,"1. Fill mandatory fields (Name, Email).
+2. Set Expected Close Date to 01/01/2020.
+3. Click ""Create Lead"".","Verify that:
+1) Validation error is shown indicating the date must be in the future, OR
+2) The lead is created (verify business rules).",,,,,,,Y,,,,,,Validation,Low,,,
+1.2.14,Cancel lead creation,"Verify that cancelling discards the form without saving.",User is logged in as Admin. Create Lead modal is open.,"1. Enter Name: Cancel Test
+2. Enter Email: cancel@test.com
+3. Click ""Cancel"" button.","Verify that:
+1) Modal closes.
+2) No new lead is created.
+3) Dashboard list remains unchanged.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.2.15,Close Create Lead modal using X button,"Verify that closing modal via X button discards data.",User is logged in as Admin. Create Lead modal is open.,"1. Enter Name: Close Test
+2. Click the X (close) button on the modal.","Verify that:
+1) Modal closes without saving.
+2) No new lead is created.",,,,,,,Y,,,,,,Functional,Low,,,
+1.2.16,Create lead as Viewer role,"Verify that Viewer role cannot create leads.",User is logged in as Viewer (tester@company.com).,"1. Verify if ""+ Create Lead"" button is visible.
+2. If visible, attempt to click it.","Verify that:
+1) ""Create Lead"" button is not visible or is disabled for Viewer role.
+2) Lead creation is not possible.",,,,,,,Y,,,,,,Security,High,,,
+1.2.17,Create lead with invalid phone number,"Verify behavior with non-numeric phone input.",User is logged in as Admin. Create Lead modal is open.,"1. Enter Name: Phone Test
+2. Enter Email: phone@test.com
+3. Enter Phone: abc-not-a-number
+4. Click ""Create Lead"".","Verify that:
+1) Validation error for phone field, OR
+2) The field accepts freeform text (verify business rules).",,,,,,,Y,,,,,,Validation,Low,,,
+1.3.1,Verify leads list displays after login,"Verify that leads table is displayed on dashboard after login.",User is logged in as Admin.,"1. Observe the dashboard page.","Verify that:
+1) Leads table is displayed with columns: ID, Name, Email, Company, Priority, Status, Deal Value, Source, Created, Actions.
+2) Table shows ""Showing 1 to 10 of X leads"".",,,,,,,Y,,,,,,Functional,Critical,,,
+1.3.2,Verify leads table columns and data,"Verify that each lead row displays correct data.",User is logged in as Admin. Leads exist in the system.,"1. Observe the first row in the leads table.","Verify that each lead row displays:
+1) ID (numeric)
+2) Name
+3) Email
+4) Company
+5) Priority (color-coded badge)
+6) Status (color-coded badge)
+7) Deal Value ($ formatted)
+8) Source
+9) Created date
+10) Action icons (view, edit, delete).",,,,,,,Y,,,,,,Functional,High,,,
+1.3.3,Pagination - navigate to next page,"Verify that Next button loads the next page of leads.",User is logged in as Admin. Total leads > 10.,"1. Verify ""Showing 1 to 10 of X leads"" is displayed.
+2. Click ""Next"" button.","Verify that:
+1) Page 2 loads with the next set of leads.
+2) ""Previous"" button becomes active.
+3) Lead rows are different from page 1.",,,,,,,Y,,,,,,Functional,High,,,
+1.3.4,Pagination - navigate to previous page,"Verify that Previous button loads the previous page.",User is on page 2 of the leads list.,"1. Click ""Previous"" button.","Verify that:
+1) Page 1 loads with the original set of leads.
+2) ""Previous"" button is disabled on page 1.",,,,,,,Y,,,,,,Functional,High,,,
+1.3.5,Previous button disabled on first page,"Verify that Previous button is disabled on page 1.",User is logged in as Admin. On page 1 of leads list.,"1. Observe the ""Previous"" button.","Verify that:
+1) ""Previous"" button is disabled/greyed out and not clickable.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.3.6,Next button disabled on last page,"Verify that Next button is disabled on the last page.",User is logged in as Admin.,"1. Click ""Next"" until the last page.
+2. Observe the ""Next"" button.","Verify that:
+1) ""Next"" button is disabled/greyed out on the last page.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.3.7,Search leads by name,"Verify that search filters leads by name.",User is logged in as Admin. Lead ""Sarah Johnson"" exists.,"1. Click on the search field.
+2. Type: Sarah","Verify that:
+1) Leads list filters to show only leads matching ""Sarah"".
+2) Other leads are hidden.",,,,,,,Y,,,,,,Functional,High,,,
+1.3.8,Search leads by email,"Verify that search filters leads by email.",User is logged in as Admin.,"1. Type: techcorp in the search field.","Verify that:
+1) Leads list filters to show leads with email containing ""techcorp"".",,,,,,,Y,,,,,,Functional,High,,,
+1.3.9,Search leads by phone number,"Verify that search filters leads by phone.",User is logged in as Admin.,"1. Type: 555-123 in the search field.","Verify that:
+1) Leads list filters to show leads with matching phone numbers.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.3.10,Search with no matching results,"Verify that empty state is shown for no results.",User is logged in as Admin.,"1. Type: zzzznonexistent in the search field.","Verify that:
+1) Table shows empty state or ""No leads found"" message.
+2) No leads are displayed.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.3.11,Filter leads by Status,"Verify that status dropdown filters leads correctly.",User is logged in as Admin.,"1. Click the ""All Statuses"" dropdown.
+2. Select ""Contacted"".","Verify that:
+1) Only leads with Status ""Contacted"" are displayed.",,,,,,,Y,,,,,,Functional,High,,,
+1.3.12,Clear search and verify all leads return,"Verify that clearing search restores full list.",User has an active search filter applied.,"1. Clear the search field.","Verify that:
+1) Full leads list is restored.
+2) Pagination shows original total count.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.3.13,Sort leads by Name column,"Verify that clicking Name column header sorts leads.",User is logged in as Admin.,"1. Click on the ""Name"" column header (sort icon).","Verify that:
+1) Leads are sorted alphabetically by Name.
+2) Clicking again reverses the sort order.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.3.14,Sort leads by Deal Value column,"Verify that clicking Deal Value column header sorts leads.",User is logged in as Admin.,"1. Click on the ""Deal Value"" column header.","Verify that:
+1) Leads are sorted by Deal Value (ascending or descending).
+2) Clicking again reverses the order.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.3.15,Newly created lead appears in list,"Verify that a newly created lead is visible in the list.",User is logged in as Admin.,"1. Note the current total lead count.
+2. Create a new lead with Name: Verification Lead, Email: verify@test.com
+3. Observe the leads list.","Verify that:
+1) Total lead count increases by 1.
+2) The new lead ""Verification Lead"" appears in the list.",,,,,,,Y,,,,,,Functional,Critical,,,
+1.3.16,Export button available for Admin,"Verify that Export functionality works for Admin.",User is logged in as Admin.,"1. Observe the ""Export"" button next to ""Create Lead"".
+2. Click ""Export"".","Verify that:
+1) Export functionality triggers (file download or export action).
+2) Data is exported correctly.",,,,,,,Y,,,,,,Functional,Medium,,,
+1.3.17,Action icons - View lead details,"Verify that view icon opens lead details.",User is logged in as Admin. Leads exist in the list.,"1. Click the view icon (eye) on any lead row.","Verify that:
+1) Lead detail view/modal opens showing all lead information.",,,,,,,Y,,,,,,Functional,High,,,
+1.3.18,Action icons - Edit lead,"Verify that edit icon opens edit form with pre-populated data.",User is logged in as Admin.,"1. Click the edit icon (pencil) on any lead row.","Verify that:
+1) Edit form/modal opens with pre-populated lead data.",,,,,,,Y,,,,,,Functional,High,,,
+1.3.19,Action icons - Delete lead,"Verify that delete icon removes the lead.",User is logged in as Admin.,"1. Note the lead name in the first row.
+2. Click the delete icon (trash) on that row.
+3. Confirm deletion (if confirmation dialog appears).","Verify that:
+1) Lead is removed from the list.
+2) Total count decreases by 1.",,,,,,,Y,,,,,,Functional,High,,,
+1.3.20,Viewer role cannot see Edit/Delete actions,"Verify that Viewer role has read-only access to actions.",User is logged in as Viewer (tester@company.com).,"1. Observe the Actions column in the leads table.","Verify that:
+1) Only the view icon (eye) is visible.
+2) Edit (pencil) and Delete (trash) icons are NOT displayed.",,,,,,,Y,,,,,,Security,High,,,
+1.3.21,Manager role cannot see Delete action,"Verify that Manager role cannot delete leads.",User is logged in as Manager (qa@company.com).,"1. Observe the Actions column in the leads table.","Verify that:
+1) View (eye) and Edit (pencil) icons are visible.
+2) Delete (trash) icon is NOT displayed.",,,,,,,Y,,,,,,Security,High,,,
+1.4.1,E2E: Login - Create Lead - Verify in List,"Verify the complete happy path flow end-to-end.",None (fresh session).,"1. Navigate to https://v0-lead-manager-app.vercel.app
+2. Login with admin@company.com / Admin@123
+3. Verify dashboard loads with leads table.
+4. Note the total lead count.
+5. Click ""+ Create Lead"".
+6. Enter Name: E2E Test Lead
+7. Enter Email: e2e@test.com
+8. Select Priority: High
+9. Click ""Create Lead"".
+10. Verify success message appears.
+11. Verify lead count increased by 1.
+12. Search for ""E2E Test Lead"".
+13. Verify the lead appears with correct data.","Verify that:
+1) Complete flow succeeds without errors.
+2) New lead is visible in the list with all entered data matching.",,,,,,,Y,,,,,,E2E,Critical,,,
+1.4.2,E2E: Create Lead - Logout - Login - Verify Persistence,"Verify that created lead persists across sessions.",None (fresh session).,"1. Login as Admin.
+2. Create a lead with Name: Persist Test, Email: persist@test.com
+3. Verify lead appears in the list.
+4. Click ""Logout"".
+5. Login again as Admin.
+6. Search for ""Persist Test"".","Verify that:
+1) The previously created lead is still present in the list after re-login.
+2) Data persists across sessions.",,,,,,,Y,,,,,,E2E,High,,,
+1.4.3,E2E: Manager - Create Lead - Verify No Delete,"Verify Manager role flow with permission restrictions.",None (fresh session).,"1. Login with qa@company.com / password123
+2. Click ""+ Create Lead"".
+3. Enter Name: Manager Lead, Email: manager@test.com
+4. Click ""Create Lead"".
+5. Verify lead appears in the list.
+6. Verify delete icon is not available on the new lead row.","Verify that:
+1) Manager can create and view leads.
+2) Manager cannot delete leads.",,,,,,,Y,,,,,,E2E,High,,,
